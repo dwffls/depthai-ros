@@ -69,6 +69,7 @@ void SysLogger::produceDiagnostics(diagnostic_updater::DiagnosticStatusWrapper& 
         auto logData = loggerQ->get<dai::SystemInformation>(std::chrono::seconds(5), timeout);
         if(!timeout) {
             stat.summary(diagnostic_msgs::msg::DiagnosticStatus::OK, "System Information");
+            const dai::SystemInformation& sysInfo = *logData;
             stat.add("Leon CSS CPU Usage", sysInfo.leonCssCpuUsage.average * 100);
             stat.add("Leon MSS CPU Usage", sysInfo.leonMssCpuUsage.average * 100);
             stat.add("Ddr Memory Usage", sysInfo.ddrMemoryUsage.used / (1024.0f * 1024.0f));
