@@ -15,6 +15,7 @@ namespace dai_nodes {
 BaseNode::BaseNode(const std::string& daiNodeName, std::shared_ptr<rclcpp::Node> node, std::shared_ptr<dai::Pipeline> /*pipeline*/)
     : baseNode(node), baseDAINodeName(daiNodeName), logger(node->get_logger()) {
     intraProcessEnabled = node->get_node_options().use_intra_process_comms();
+    ph = std::make_unique<param_handlers::CameraParamHandler>(baseNode, "camera");
 };
 BaseNode::~BaseNode() = default;
 void BaseNode::setNodeName(const std::string& daiNodeName) {
@@ -46,6 +47,10 @@ std::string BaseNode::getSocketName(dai::CameraBoardSocket socket) {
 }
 
 std::string BaseNode::getTFPrefix(const std::string& frameName) {
+    if(ph->getParam<bool>("i_publish_tf_from_calibration")) {
+        return ph->getParam<std::string>("i_tf_base_frame") + "_" + frameName;
+    }
+
     return std::string(getROSNode()->get_name()) + "_" + frameName;
 }
 

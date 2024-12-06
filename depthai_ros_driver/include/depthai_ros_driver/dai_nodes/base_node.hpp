@@ -5,6 +5,7 @@
 
 #include "depthai-shared/common/CameraBoardSocket.hpp"
 #include "depthai/pipeline/Node.hpp"
+#include "depthai_ros_driver/param_handlers/camera_param_handler.hpp"
 #include "depthai_ros_driver/utils.hpp"
 #include "rclcpp/logger.hpp"
 
@@ -99,6 +100,8 @@ class BaseNode {
     std::string baseDAINodeName;
     bool intraProcessEnabled;
     rclcpp::Logger logger;
+
+    std::unique_ptr<param_handlers::CameraParamHandler> ph;
 };
 }  // namespace dai_nodes
 }  // namespace depthai_ros_driver
