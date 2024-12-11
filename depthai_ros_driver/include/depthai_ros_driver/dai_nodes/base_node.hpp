@@ -100,8 +100,6 @@ class BaseNode {
     std::string baseDAINodeName;
     bool intraProcessEnabled;
     rclcpp::Logger logger;
-
-    std::unique_ptr<param_handlers::CameraParamHandler> ph;
 };
 }  // namespace dai_nodes
 }  // namespace depthai_ros_driver
